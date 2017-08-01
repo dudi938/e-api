@@ -1,23 +1,22 @@
-<html>
-<head>
-<title>eBay Search Results</title>
-<style type="text/css">body { font-family: arial,sans-serif;} </style>
-</head>
-<body>
-<h1>eBay Search Results</h1>
 
 
-<div id="results"></div>
-
-
-<script>
-    // Parse the response and build an HTML table to display search results
+   // Parse the response and build an HTML table to display search results
   function _cb_findItemsByKeywords(root) {
 
 
     var items = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
     var html = [];
-    html.push('<table width="100%" border="0" cellspacing="0" cellpadding="3"><tbody>');
+    html.push('<table width="100%" border="0" cellspacing="0" cellpadding="3">');
+
+    html.push('<thead>');
+        html.push('<tr>');
+            html.push('<th>Pic</th>');
+            html.push('<th>Item url</th>');
+        html.push('</tr>');
+    html.push('</thead>');
+
+    html.push('<tbody>');
+
     for (var i = 0; i < items.length; ++i) {
       var item     = items[i];
       var title    = item.title;
@@ -29,7 +28,8 @@
       }
     }
     html.push('</tbody></table>');
-    document.getElementById("results").innerHTML = html.join("");
+    //document.getElementById("results").innerHTML = html.join("");
+    $('.table-main-data')[0].innerHTML = html.join("");
 
   }  
 
@@ -73,6 +73,10 @@
         }
     }
     }  // End buildURLArray() function
+ 
+
+$(document).ready(function(){
+
 
     // Execute the function to build the URL filter
     buildURLArray(filterarray);
@@ -83,13 +87,13 @@
     var url = "http://svcs.ebay.com/services/search/FindingService/v1";
         url += "?OPERATION-NAME=findItemsByKeywords";
         url += "&SERVICE-VERSION=1.0.0";
-		    url += "&SECURITY-APPNAME=DavidGer-HotListi-PRD-0090fc79c-4f18c5d1";
+		url += "&SECURITY-APPNAME=DavidGer-HotListi-PRD-0090fc79c-4f18c5d1";
         url += "&GLOBAL-ID=EBAY-US";
         url += "&RESPONSE-DATA-FORMAT=JSON";
         url += "&callback=_cb_findItemsByKeywords";
         url += "&REST-PAYLOAD";
         url += "&keywords=harry%20potter";
-        url += "&paginationInput.entriesPerPage=100";
+        url += "&paginationInput.entriesPerPage=3";
         url += urlfilter;
         url += "&SECURITY-APPNAME=DavidGer-HotListi-PRD-0090fc79c-4f18c5d1";
 
@@ -97,9 +101,7 @@
       // Submit the request
         s=document.createElement('script'); // create script element
         s.src= url;
-        document.body.appendChild(s);  
+        document.body.appendChild(s); 
 
-</script>
 
-</body>
-</html>
+});
