@@ -75,10 +75,9 @@
     }  // End buildURLArray() function
  
 
-$(document).ready(function(){
 
-
-    // Execute the function to build the URL filter
+ function searchByKyWord(keyWord){
+     // Execute the function to build the URL filter
     buildURLArray(filterarray);
 
 
@@ -92,7 +91,7 @@ $(document).ready(function(){
         url += "&RESPONSE-DATA-FORMAT=JSON";
         url += "&callback=_cb_findItemsByKeywords";
         url += "&REST-PAYLOAD";
-        url += "&keywords=harry%20potter";
+        url += "&keywords=" + keyWord;
         url += "&paginationInput.entriesPerPage=3";
         url += urlfilter;
         url += "&SECURITY-APPNAME=DavidGer-HotListi-PRD-0090fc79c-4f18c5d1";
@@ -103,5 +102,17 @@ $(document).ready(function(){
         s.src= url;
         document.body.appendChild(s); 
 
+ }
+
+$(document).ready(function(){
+
+    $('.bt_runKWSearch').on('click',function(){
+        var keyWord = $('.tb_runKWSearch').val();
+
+        if(keyWord){
+            searchByKyWord(keyWord);
+        }
+    });
+    
 
 });
